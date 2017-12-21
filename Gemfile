@@ -31,6 +31,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'simplecov', :require => false
+  gem 'factory_bot_rails'
+  gem 'ffaker', '~> 2.2'
+  gem 'faker', '1.4.3'
 end
 
 group :test do
