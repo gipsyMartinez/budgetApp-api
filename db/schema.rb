@@ -10,7 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221025409) do
+ActiveRecord::Schema.define(version: 20171221034338) do
+
+  create_table "budgets", force: :cascade do |t|
+    t.integer "month_id"
+    t.integer "expense_id"
+    t.float "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expense_id"], name: "index_budgets_on_expense_id"
+    t.index ["month_id"], name: "index_budgets_on_month_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "months", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
