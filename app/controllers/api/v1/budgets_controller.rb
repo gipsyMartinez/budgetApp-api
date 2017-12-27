@@ -14,7 +14,7 @@ class Api::V1::BudgetsController < ApplicationController
     if @budget.save
       render status: :created, json: { message: "Budget created!"}
     else
-      render status: :unprocessable_entity, json: { message: @budget.errors.full_messages.join(' <br>- ') }
+      render status: :unprocessable_entity, json: { message: @budget.errors.full_messages }
     end
   end
 
@@ -22,7 +22,7 @@ class Api::V1::BudgetsController < ApplicationController
     if @budget.update(budget_params)
       render status: :ok, json: { message: "Budget successfully updated" }
     else
-      render status: :unprocessable_entity, json: { message: @budget.errors.full_messages.join(' <br>- ') }
+      render status: :unprocessable_entity, json: { message: @budget.errors.full_messages }
     end
   end
 
@@ -30,13 +30,13 @@ class Api::V1::BudgetsController < ApplicationController
     if @budget.destroy
       render status: :ok, json: { message: "Budget successfully deleted" }
     else
-      render status: :unprocessable_entity, json: { message: @budget.errors.full_messages.join(' <br>- ') }
+      render status: :unprocessable_entity, json: { message: @budget.errors.full_messages }
     end
   end
 
   private
     def budget_params
-      params.require(:budget).permit(:month_id, :expense_id, :amount)
+      params.require(:budget).permit(:month_id, :expense_id, :amount, :user_id)
     end
 
     def set_budget
