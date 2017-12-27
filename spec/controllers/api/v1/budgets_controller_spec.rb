@@ -42,7 +42,7 @@ RSpec.describe Api::V1::BudgetsController, type: :controller do
         expect(response).to have_http_status(200)
         expect(budget.amount).to eq new_attributes[:amount].to_f
         expect(budget.month_id).to eq new_attributes[:month_id]
-        expect(budget.expense_id).to eq new_attributes[:expense_id]
+        expect(budget.expense_id).to eq new_attributes[:expense][:expense_id]
       end
     end
     context 'when update was unsuccessful' do
@@ -58,7 +58,9 @@ RSpec.describe Api::V1::BudgetsController, type: :controller do
     let(:new_budget) { FactoryBot.attributes_for(:budget) }
     context 'when create was successfullyt' do
       it 'should create budget and return a 201 http status code ' do
-        expect { post :create, params: { budget: new_budget }, format: :json }.to change(Budget, :count).by(1)
+        #debugger
+        #attributes = JSON.parse(new_budget.to_json)
+        expect { post :create, params: { budget: attributes }, format: :json }.to change(Budget, :count).by(1)
         expect(response).to have_http_status(201) #create
       end
     end

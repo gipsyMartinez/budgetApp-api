@@ -10,6 +10,7 @@ class Api::V1::BudgetsController < ApplicationController
   end
 
   def create
+    debugger
     @budget = Budget.new(budget_params)
     if @budget.save
       render status: :created, json: { message: "Budget created!"}
@@ -36,7 +37,10 @@ class Api::V1::BudgetsController < ApplicationController
 
   private
     def budget_params
-      params.require(:budget).permit(:month_id, :expense_id, :amount, :user_id)
+      # params.require(:data)
+      #    .require(:attributes)
+      #    .permit(:title, :description)
+      params.require(:budget).permit(:month_id, :amount, :user_id).require(:expense).permit(:id, :title, :description)
     end
 
     def set_budget
