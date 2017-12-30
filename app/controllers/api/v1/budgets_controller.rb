@@ -10,10 +10,9 @@ class Api::V1::BudgetsController < ApplicationController
   end
 
   def create
-    debugger
     @budget = Budget.new(budget_params)
     if @budget.save
-      render status: :created, json: { message: "Budget created!"}
+      render status: :created, json: { message: "Budget created!", id: @budget.id }
     else
       render status: :unprocessable_entity, json: { message: @budget.errors.full_messages }
     end
@@ -37,10 +36,7 @@ class Api::V1::BudgetsController < ApplicationController
 
   private
     def budget_params
-      # params.require(:data)
-      #    .require(:attributes)
-      #    .permit(:title, :description)
-      params.require(:budget).permit(:month_id, :amount, :user_id).require(:expense).permit(:id, :title, :description)
+      params.require(:budget).permit(:month_id, :amount, :user_id, expense_attributes: [:id, :title, :description])
     end
 
     def set_budget

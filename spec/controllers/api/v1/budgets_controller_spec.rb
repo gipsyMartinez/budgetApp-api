@@ -37,18 +37,19 @@ RSpec.describe Api::V1::BudgetsController, type: :controller do
     let(:new_attributes) { FactoryBot.attributes_for(:budget) }
     context 'when update was successfully' do
       it 'should update the resource' do
-        put :update, params: { id: budget.to_param, budget: new_attributes }, format: :json
+        put :update, params: { id: budget.to_param, budget: new_attributes }
         budget.reload
         expect(response).to have_http_status(200)
         expect(budget.amount).to eq new_attributes[:amount].to_f
         expect(budget.month_id).to eq new_attributes[:month_id]
-        expect(budget.expense_id).to eq new_attributes[:expense][:expense_id]
+        expect(budget.expense.title).to eq new_attributes[:expense_attributes][:title]
+        expect(budget.expense.description).to eq new_attributes[:expense_attributes][:description]
       end
     end
     context 'when update was unsuccessful' do
       it 'should not update the resource' do
         allow_any_instance_of(Budget).to receive(:update).and_return(false)
-        put :update, params: { id: budget.to_param, budget: new_attributes }, format: :json
+        put :update, params: { id: budget.to_param, budget: new_attributes }
         expect(response).to have_http_status(422) #unprocessable_entity
       end
     end
@@ -56,11 +57,10 @@ RSpec.describe Api::V1::BudgetsController, type: :controller do
 
   describe 'POST create' do
     let(:new_budget) { FactoryBot.attributes_for(:budget) }
-    context 'when create was successfullyt' do
+
+    context 'when create was successfully' do
       it 'should create budget and return a 201 http status code ' do
-        #debugger
-        #attributes = JSON.parse(new_budget.to_json)
-        expect { post :create, params: { budget: attributes }, format: :json }.to change(Budget, :count).by(1)
+        expect { post :create, params: { budget: new_budget } }.to change(Budget, :count).by(1)
         expect(response).to have_http_status(201) #create
       end
     end
