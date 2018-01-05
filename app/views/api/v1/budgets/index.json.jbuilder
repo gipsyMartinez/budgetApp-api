@@ -1,6 +1,5 @@
 json.array! @budgets do |budget|
   json.id budget.id
-  json.month_id budget.month_id
   json.amount budget.amount
   json.expense_id budget.expense_id
   json.expense_title budget.expense.title
