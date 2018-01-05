@@ -7,14 +7,12 @@ RSpec.describe Item, type: :model do
 
   describe 'Callbacks' do
     let(:budget){ FactoryBot.create(:budget, amount: 100000.00) }
-    let(:item){ FactoryBot.create(:item, budget_id: budget.id) }
     describe 'update_amount' do
       before :each do
         budget
       end
       context 'when amount is present' do
         it 'should subtract the budget ammount' do
-          binding.pry
           FactoryBot.create(:item, budget_id: budget.id, amount: 40000.00)
           budget.reload
           expect(budget.amount).to eq 60000.00
