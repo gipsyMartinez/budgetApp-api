@@ -6,7 +6,7 @@ class Api::V1::BudgetsController < ApplicationController
   end
 
   def show
-    render json: @budget
+    @budget
   end
 
   def create
@@ -36,7 +36,7 @@ class Api::V1::BudgetsController < ApplicationController
 
   private
     def budget_params
-      params.require(:budget).permit(:month_id, :amount, :user_id, expense_attributes: [:id, :title, :description])
+      params.require(:budget).permit(:amount, :user_id, expense_attributes: [:id, :title, :description])
     end
 
     def set_budget

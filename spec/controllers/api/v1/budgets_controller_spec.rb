@@ -41,7 +41,6 @@ RSpec.describe Api::V1::BudgetsController, type: :controller do
         budget.reload
         expect(response).to have_http_status(200)
         expect(budget.amount).to eq new_attributes[:amount].to_f
-        expect(budget.month_id).to eq new_attributes[:month_id]
         expect(budget.expense.title).to eq new_attributes[:expense_attributes][:title]
         expect(budget.expense.description).to eq new_attributes[:expense_attributes][:description]
       end
