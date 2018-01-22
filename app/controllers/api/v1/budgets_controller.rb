@@ -6,7 +6,7 @@ class Api::V1::BudgetsController < ApplicationController
   end
 
   def show
-    render json: @budget
+    @budget
   end
 
   def create
